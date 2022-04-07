@@ -1,2 +1,8 @@
 # Ignore virtual environment folder
 env/
+
+# Ignore python cache
+whattodo_api/whattodo_api/__pycache__/
+
+# Ignore environment files
+.env
