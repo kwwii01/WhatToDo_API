@@ -1,0 +1,31 @@
+[
+    {
+        "model": "tasks.status",
+        "pk": 1,
+        "fields": {
+            "name": "To Do"
+        }
+    },
+    {
+        "model": "tasks.status",
+        "pk": 2,
+        "fields": {
+            "name": "In Progress"
+        }
+    },
+    {
+        "model": "tasks.status",
+        "pk": 3,
+        "fields": {
+            "name": "Done"
+        }
+    },
+    {
+        "model": "tasks.status",
+        "pk": 4,
+        "fields": {
+            "name": "Won't Do"
+        }
+    }
+]
+    

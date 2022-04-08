@@ -34,6 +34,3 @@ class Task(models.Model):
     status = models.ForeignKey(Status, null=True, on_delete=models.SET_NULL)
     priority = models.ForeignKey(Priority, null=True, on_delete=models.SET_NULL)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
-

@@ -1,0 +1,30 @@
+[
+    {
+        "model": "tasks.priority",
+        "pk": 1,
+        "fields": {
+            "name": "Minor"
+        }
+    },
+    {
+        "model": "tasks.priority",
+        "pk": 2,
+        "fields": {
+            "name": "Major"
+        }
+    },
+    {
+        "model": "tasks.priority",
+        "pk": 3,
+        "fields": {
+            "name": "Critical"
+        }
+    },
+    {
+        "model": "tasks.priority",
+        "pk": 4,
+        "fields": {
+            "name": "Blocker"
+        }
+    }
+]
