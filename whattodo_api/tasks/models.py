@@ -6,6 +6,9 @@ class Status(models.Model):
     """Model that represents status of a task"""
     name = models.fields.CharField(max_length=24)
 
+    class Meta:
+        verbose_name_plural = "Statuses"
+
     def __str__(self):
         return self.name
 
@@ -13,6 +16,9 @@ class Status(models.Model):
 class Priority(models.Model):
     """Model that represents priority of a task"""
     name = models.fields.CharField(max_length=24)
+
+    class Meta:
+        verbose_name_plural = "Priorities"
 
     def __str__(self):
         return self.name

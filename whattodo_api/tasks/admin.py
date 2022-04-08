@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Status, Priority, Task
+
+
+admin.site.register([Status, Priority, Task])
