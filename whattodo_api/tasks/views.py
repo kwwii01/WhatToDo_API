@@ -1,7 +1,8 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
 from tasks.models import Task, Status, Priority
 from tasks.serializers import (
@@ -31,11 +32,10 @@ def priority_list(request):
 
 
 @api_view(["GET", "POST"])
-@permission_classes([IsAuthenticated])
 def task_list(request):
     """List all tasks"""
     if request.method == "GET":
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(created_by=request.user)
         serializer = TaskListSerializer(tasks, many=True)
         return Response(serializer.data)
     
@@ -58,7 +58,16 @@ def task_list(request):
 @api_view(["GET"])
 def task_details(request, pk):
     """Details of specific task"""
-    if request.method == "GET":
+    # Verify if user is task owner
+    try:
+        
         task = Task.objects.get(id=pk)
+        if task.created_by != request.user:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":        
         serializer = TaskDetailSerializer(task, many=False)
         return Response(serializer.data)
