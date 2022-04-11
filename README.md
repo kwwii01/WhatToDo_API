@@ -2,8 +2,8 @@
 API for my future ToDo web abb created with Django Rest Framework
 
 ## Planned feautures status (can be changed in future):
-- [ ] User authentication and authorization
-- [ ] CRUD operations with tasks
+- [x] User authentication and authorization
+- [x] CRUD operations with tasks
 - [ ] Notifications using telegram-bot
 
 ## Environment configuration:
