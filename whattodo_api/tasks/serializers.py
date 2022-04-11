@@ -56,3 +56,13 @@ class TaskDetailSerializer(serializers.ModelSerializer):
             created_by=current_user,
             **validated_data
         )
+
+    def update(self, instance, validated_data):
+        instance.status = self.context.get("status")
+        instance.priority = self.context.get("priority")
+        instance.summary = validated_data.get("summary")
+        instance.detailed_description = validated_data.get("detailed_description")
+        instance.definition_of_done = validated_data.get("definition_of_done")
+        instance.save()
+        return instance
+

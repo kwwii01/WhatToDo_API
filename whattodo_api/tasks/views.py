@@ -18,7 +18,7 @@ def status_list(request):
     """List all statuses"""
     if request.method == "GET":
         statuses = Status.objects.all()
-        serializer = StatusSerializer(statuses, many=True)
+        serializer = StatusSerializer(instance=statuses, many=True)
         return Response(serializer.data)
 
 
@@ -27,7 +27,7 @@ def priority_list(request):
     """List all priorities"""
     if request.method == "GET":
         priorities = Priority.objects.all()
-        serializer = PrioritySerializer(priorities, many=True)
+        serializer = PrioritySerializer(instance=priorities, many=True)
         return Response(serializer.data)
 
 
@@ -36,7 +36,7 @@ def task_list(request):
     """List all tasks"""
     if request.method == "GET":
         tasks = Task.objects.filter(created_by=request.user)
-        serializer = TaskListSerializer(tasks, many=True)
+        serializer = TaskListSerializer(instance=tasks, many=True)
         return Response(serializer.data)
     
     if request.method == "POST":
@@ -55,7 +55,7 @@ def task_list(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)   
 
 
-@api_view(["GET"])
+@api_view(["GET", "PUT", "DELETE"])
 def task_details(request, pk):
     """Details of specific task"""
     # Verify if user is task owner
@@ -71,3 +71,24 @@ def task_details(request, pk):
     if request.method == "GET":        
         serializer = TaskDetailSerializer(task, many=False)
         return Response(serializer.data)
+
+    if request.method == "PUT":
+        task_status = Status.objects.get(id=request.data.get("status_id"))
+        priority = Priority.objects.get(id=request.data.get("priority_id"))
+        serializer = TaskDetailSerializer(
+            instance=task,
+            data=request.data,
+            context={
+                "priority": priority,
+                "status": task_status,
+            }
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST) 
+
+    if request.method == "DELETE":
+        task.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
